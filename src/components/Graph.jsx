@@ -58,6 +58,9 @@ export const Graph = ({ onGetData }) => {
         const n_words = getNumberWords(wordMap);
         setWordtCounter(n_words);
 
+        // Find the top 3 rank
+        const topRank = findTopRak(wordMap);
+
         if (chartInstance !== null) {
             updateDataset(0, [5, 1, 3]);
         }
@@ -86,14 +89,20 @@ export const Graph = ({ onGetData }) => {
     }
     const getNumberWords = (wordMap) => {
         const values = Object.values(wordMap)
-        // let words = 0;
-        // wordMap.forEach(item => {
-        //     words += item;
-        // })
-        // return words;
         const reducer = (acc, cur) => acc + cur;
         const words = values.reduce(reducer, 0);
         return words;
+    }
+
+    const findTopRak = (wordMap) => {
+        const topRank = [];
+
+        const sortable = Object.entries(wordMap).sort(([, a], [, b]) => a - b).reverse();
+        for (let i = 0; i < 3; i++) {
+            topRank.push(sortable[i])
+        }
+        console.log(topRank);
+        return (topRank)
     }
     return (
         <section className="graph">

@@ -1,0 +1,40 @@
+.graph {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  margin-top: 22px;
+}
+.graph .graph__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 22px 18px;
+  width: 100%;
+}
+.graph__total {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  font-family: Arial;
+  font-size: 16px;
+  font-weight: 700;
+  color: #4f4f4f;
+}
+.graph__total .last {
+  padding-left: 30px;
+}
+.graph__histo-text {
+  padding-top: 18px;
+  font-family: Arial;
+  font-size: 16px;
+  font-weight: 700;
+  color: #4f4f4f;
+}
+
+@media screen and (min-width: 1200px) {
+  .graph .graph__container {
+    max-width: 1200px;
+    padding: 20px;
+  }
+}

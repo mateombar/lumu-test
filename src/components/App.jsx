@@ -1,11 +1,12 @@
 import React from 'react';
 import {Header} from './Header';
+import {Graph} from './Graph';
 const App = () => {
     return (
         <>
             <Header/>
             <main>
-                <h1>Hello World</h1>
+                <Graph/>
             </main>
         </>
     )

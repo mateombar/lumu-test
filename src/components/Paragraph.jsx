@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useFetchData } from '../hooks/useFetchData';
 import './styles/Paragraph.css';
 export const Paragraph = () => {
-    const BASE_URL = 'https://baconipsum.com/api/?type=meat-and-filler';
+    const [BASE_URL, setBASE_URL] = useState('https://baconipsum.com/api/?type=all-meat');
     const { data, loading, error } = useFetchData({ BASE_URL });
-    if (!data) {
-        return <p>Loading...</p>
+    const handleSubmitForm = (event) => {
+        event.preventDefault();
+        setBASE_URL('https://baconipsum.com/api/?type=all-meat&paras=2&start-with-lorem=1');
+
     }
     return (
         <section className="paragraph">
-            <form className="paragraph__options">
+            <form onSubmit={handleSubmitForm} className="paragraph__options">
                 <div className="options__form">
                     <label># PARAGRAPHS: </label>
                     <input className="input__number" type="number" />
@@ -34,9 +36,15 @@ export const Paragraph = () => {
                     {loading ?
                         <p className="text">Loading...</p>
                         :
-                        <p className="text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur sequi facilis commodi harum molestiae laudantium autem temporibus fugit facere atque deserunt consectetur non reiciendis ea, quis delectus rem eveniet! Non!
-                    </p>
+                        <>
+                            {
+                                data.map((p, index) => (
+                                    <p key={index} className="text">
+                                        {p}
+                                    </p>
+                                ))
+                            }
+                        </>
                     }
                 </article>
             }

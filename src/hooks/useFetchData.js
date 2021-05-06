@@ -26,6 +26,6 @@ export const useFetchData = ({
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [BASE_URL]);
   return { data: fetch_data, loading, error };
 };

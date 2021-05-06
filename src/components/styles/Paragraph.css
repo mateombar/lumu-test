@@ -58,6 +58,7 @@
   font-family: Arial;
   font-size: 18px;
   line-height: 36px;
+  margin-bottom: 10px;
 }
 .paragraph__text  .text--error {
   color: rgb(124, 0, 0);

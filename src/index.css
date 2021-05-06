@@ -1,0 +1,52 @@
+@font-face {
+  font-family: "montserratregular";
+  src: url("./assets/fonts/montserrat-regular-webfont.woff2") format("woff2"),
+    url("./assets/fonts/montserrat-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+html {
+  box-sizing: border-box;
+  font-family: "montserratregular";
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+body {
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(240, 240, 240);
+}
+
+ul,
+li,
+h1,
+h2,
+h3,
+p,
+button {
+  margin: 0;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+button {
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+#app {
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+a,
+button {
+  -webkit-tap-highlight-color: transparent; 
+}

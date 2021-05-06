@@ -1,10 +1,11 @@
 {
   "name": "lumu-test",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A test project created by Mateo Montanez Baron (mateombar)",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production",
+    "start": "webpack serve"
   },
   "keywords": [],
   "author": "Mateo Montanez Baron (mateombar)",

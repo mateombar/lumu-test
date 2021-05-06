@@ -48,12 +48,19 @@
   font-size: 18px;
   line-height: 20px;
   text-align: center;
+  cursor: pointer;
 }
 .paragraph .paragraph__text {
   padding: 18px;
 }
-.paragraph .paragraph__text p {
+.paragraph__text .text {
   color: #333;
+  font-family: Arial;
+  font-size: 18px;
+  line-height: 36px;
+}
+.paragraph__text  .text--error {
+  color: rgb(124, 0, 0);
   font-family: Arial;
   font-size: 18px;
   line-height: 36px;

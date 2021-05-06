@@ -1,27 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useFetchData } from '../hooks/useFetchData';
+import { useInputValue } from '../hooks/useInputValue';
 import './styles/Paragraph.css';
 export const Paragraph = () => {
     const [BASE_URL, setBASE_URL] = useState('https://baconipsum.com/api/?type=all-meat');
     const { data, loading, error } = useFetchData({ BASE_URL });
+    const nParagraphs = useInputValue(1)
+    const startLorem = useInputValue(0)
     const handleSubmitForm = (event) => {
         event.preventDefault();
-        setBASE_URL('https://baconipsum.com/api/?type=all-meat&paras=2&start-with-lorem=1');
+        const lorem = !startLorem.value || 0 ? 0 : 1;
+        setBASE_URL(`https://baconipsum.com/api/?type=all-meat&paras=${nParagraphs.value}&start-with-lorem=${lorem}`);
 
+        console.log(nParagraphs.value);
+        console.log(lorem);
     }
     return (
         <section className="paragraph">
             <form onSubmit={handleSubmitForm} className="paragraph__options">
                 <div className="options__form">
-                    <label># PARAGRAPHS: </label>
-                    <input className="input__number" type="number" />
+                    <label htmlFor="n_paragraphs"># PARAGRAPHS: </label>
+                    <input className="input__number"  min="0" type="number" name="n_paragraphs" {...nParagraphs} disabled={loading} />
                 </div>
                 <div className="options__form">
-                    <label>STARTS WITH LOREM: </label>
-                    <input className="input__check" type="checkbox" name="lorem" id="lorem" />
+                    <label htmlFor="lorem">STARTS WITH LOREM: </label>
+                    <input className="input__check" type="checkbox" name="lorem" id="lorem" {...startLorem} disabled={loading} />
                 </div>
                 <div className="options__form">
-                    <button className="input__button" type="submit">GENERATE!</button>
+                    <button className="input__button" type="submit" disabled={loading}>GENERATE!</button>
                 </div>
             </form>
             {error ?

@@ -50,6 +50,9 @@
   text-align: center;
   cursor: pointer;
 }
+.input__button:disabled{
+  background-color: #ff9a95;
+}
 .paragraph .paragraph__text {
   padding: 18px;
 }

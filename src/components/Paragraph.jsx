@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFetchData } from '../hooks/useFetchData';
 import { useInputValue } from '../hooks/useInputValue';
 import './styles/Paragraph.css';
-export const Paragraph = () => {
+export const Paragraph = ({ onSubmitData }) => {
     const [BASE_URL, setBASE_URL] = useState('https://baconipsum.com/api/?type=all-meat');
     const { data, loading, error } = useFetchData({ BASE_URL });
     const nParagraphs = useInputValue(1)
     const startLorem = useInputValue(0)
+    useEffect(() => {
+        onSubmitData({data});
+    }, [data])
     const handleSubmitForm = (event) => {
         event.preventDefault();
         const lorem = !startLorem.value || 0 ? 0 : 1;
         setBASE_URL(`https://baconipsum.com/api/?type=all-meat&paras=${nParagraphs.value}&start-with-lorem=${lorem}`);
-
-        console.log(nParagraphs.value);
-        console.log(lorem);
     }
     return (
         <section className="paragraph">
             <form onSubmit={handleSubmitForm} className="paragraph__options">
                 <div className="options__form">
                     <label htmlFor="n_paragraphs"># PARAGRAPHS: </label>
-                    <input className="input__number"  min="0" type="number" name="n_paragraphs" {...nParagraphs} disabled={loading} />
+                    <input className="input__number" min="0" type="number" name="n_paragraphs" {...nParagraphs} disabled={loading} />
                 </div>
                 <div className="options__form">
                     <label htmlFor="lorem">STARTS WITH LOREM: </label>

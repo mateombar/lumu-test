@@ -53,6 +53,7 @@ export const Graph = ({ onGetData }) => {
             setChartCounter(sentence.length);
             // Save the repeat words
             const wordMap = countRepeatedWords(sentence);
+            // Delete this key that causes problems o.O!
             delete wordMap[""];
             // Get the number of words
             const n_words = getNumberWords(wordMap);
@@ -62,13 +63,16 @@ export const Graph = ({ onGetData }) => {
             const topRank = findTopRak(wordMap);
 
             if (topRank.length > 0) {
+                // Update the Graph Dataset
                 updateDataset(0, topRank);
             }
         }
     }, [onGetData]);
 
     const fixData = (onGetData) => {
+        // Here I mix the array of strings in one string.
         let sentence = onGetData.join(" ");
+        // Clean the string of "." and "," charaters
         sentence = sentence.replace(/\./g, '');
         sentence = sentence.replace(/\,/g, '');
         return sentence;
@@ -76,19 +80,21 @@ export const Graph = ({ onGetData }) => {
     const updateDataset = (datasetIndex, newData) => {
         let nWords = [];
         let labels = [];
+        // Separates the keys and the values of the newData array
         newData.forEach(data => {
             nWords.push(data[1]);
             labels.push(data[0]);
         });
-
+        // Update the chart instance data
         chartInstance.data.labels = labels;
         chartInstance.data.datasets[datasetIndex].data = nWords;
         chartInstance.update();
     }
     const countRepeatedWords = (sentence) => {
+        // Separate the words
         const words = sentence.split(" ");
         const wordMap = {};
-
+        // Save key = word, value = number of repetitions
         for (let i = 0; i < words.length; i++) {
             const currentWordCount = wordMap[words[i]];
             const count = currentWordCount ? currentWordCount : 0;
@@ -97,6 +103,7 @@ export const Graph = ({ onGetData }) => {
         return wordMap;
     }
     const getNumberWords = (wordMap) => {
+        // Sum the number of words of all the wordMap object with a reduce :D
         const values = Object.values(wordMap)
         const reducer = (acc, cur) => acc + cur;
         const words = values.reduce(reducer, 0);
@@ -104,10 +111,13 @@ export const Graph = ({ onGetData }) => {
     }
 
     const findTopRak = (wordMap) => {
+        // Here ... the headache
         if (wordMap) {
 
             const topRank = [];
-
+            // Convert the object data to a array with two values [key, value]
+            // Then, sort the array from smallest to largest
+            // Finaly, revert the sort with
             const sortable = Object.entries(wordMap).sort(([, a], [, b]) => a - b).reverse();
             for (let i = 0; i < 3; i++) {
                 topRank.push(sortable[i])

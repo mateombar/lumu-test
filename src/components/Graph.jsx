@@ -7,7 +7,7 @@ const chartConfigBar = {
         labels: ["Red", "Blue", "Yellow"],
         datasets: [
             {
-                label: "# of Votes",
+                label: "# of Repeated Words",
                 data: [],
                 backgroundColor: [
                     "rgba(255, 99, 132, 0.2)",
@@ -47,22 +47,23 @@ export const Graph = ({ onGetData }) => {
         }
     }, [chartRef]);
     useEffect(() => {
-        // Data normalization
-        const sentence = fixData(onGetData);
-        setChartCounter(sentence.length);
-        // Save the repeat words
-        const wordMap = countRepeatedWords(sentence);
-        delete wordMap[""];
-        console.log(wordMap);
-        // Get the number of words
-        const n_words = getNumberWords(wordMap);
-        setWordtCounter(n_words);
+        if (onGetData.length > 0) {
+            // Data normalization
+            const sentence = fixData(onGetData);
+            setChartCounter(sentence.length);
+            // Save the repeat words
+            const wordMap = countRepeatedWords(sentence);
+            delete wordMap[""];
+            // Get the number of words
+            const n_words = getNumberWords(wordMap);
+            setWordtCounter(n_words);
 
-        // Find the top 3 rank
-        const topRank = findTopRak(wordMap);
+            // Find the top 3 rank
+            const topRank = findTopRak(wordMap);
 
-        if (chartInstance !== null) {
-            updateDataset(0, [5, 1, 3]);
+            if (topRank.length > 0) {
+                updateDataset(0, topRank);
+            }
         }
     }, [onGetData]);
 
@@ -73,7 +74,15 @@ export const Graph = ({ onGetData }) => {
         return sentence;
     }
     const updateDataset = (datasetIndex, newData) => {
-        chartInstance.data.datasets[datasetIndex].data = newData;
+        let nWords = [];
+        let labels = [];
+        newData.forEach(data => {
+            nWords.push(data[1]);
+            labels.push(data[0]);
+        });
+
+        chartInstance.data.labels = labels;
+        chartInstance.data.datasets[datasetIndex].data = nWords;
         chartInstance.update();
     }
     const countRepeatedWords = (sentence) => {
@@ -95,14 +104,17 @@ export const Graph = ({ onGetData }) => {
     }
 
     const findTopRak = (wordMap) => {
-        const topRank = [];
+        if (wordMap) {
 
-        const sortable = Object.entries(wordMap).sort(([, a], [, b]) => a - b).reverse();
-        for (let i = 0; i < 3; i++) {
-            topRank.push(sortable[i])
+            const topRank = [];
+
+            const sortable = Object.entries(wordMap).sort(([, a], [, b]) => a - b).reverse();
+            for (let i = 0; i < 3; i++) {
+                topRank.push(sortable[i])
+            }
+            return (topRank)
         }
-        console.log(topRank);
-        return (topRank)
+        return [];
     }
     return (
         <section className="graph">
